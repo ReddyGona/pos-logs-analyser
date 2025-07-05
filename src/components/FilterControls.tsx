@@ -59,6 +59,14 @@ export const FilterControls = ({
     setShowErrorsOnly(false);
   };
 
+  const handleStatusFilterChange = (value: string) => {
+    if (value === 'all-statuses') {
+      setStatusFilter('');
+    } else {
+      setStatusFilter(value);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -90,12 +98,12 @@ export const FilterControls = ({
               className="pl-9"
             />
           </div>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select value={statusFilter || 'all-statuses'} onValueChange={handleStatusFilterChange}>
             <SelectTrigger>
               <SelectValue placeholder="All Status Codes" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="">All Status Codes</SelectItem>
+              <SelectItem value="all-statuses">All Status Codes</SelectItem>
               {uniqueStatuses.map((status) => (
                 <SelectItem key={status} value={status}>
                   {status} {status.startsWith('2') ? '(Success)' : status.startsWith('4') ? '(Client Error)' : status.startsWith('5') ? '(Server Error)' : ''}
